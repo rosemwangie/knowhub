@@ -3,7 +3,7 @@ package com.bobo.knowhub.controller;
 import com.bobo.knowhub.model.Users;
 import com.bobo.knowhub.repository.UserRepository;
 import com.bobo.knowhub.security.JwtUtil;
-
+import com.bobo.knowhub.service.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -20,7 +20,7 @@ public class AuthController {
     private AuthenticationManager authenticationManager;
 
     @Autowired
-    private com.bobo.knowhub.service.UserDetailsService userDetailsService;
+    private UserDetailsServiceImpl userDetailsService;
 
     @Autowired
     private UserRepository userRepository;
@@ -33,6 +33,9 @@ public class AuthController {
 
     @PostMapping("/register")
     public String registerUser(@RequestBody Users user) {
+        if (userRepository.findByEmail(user.getEmail()) != null) {
+            return "Email already in use";
+        }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
         return "User registered successfully";

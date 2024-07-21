@@ -10,14 +10,14 @@ public class Users {
     @SequenceGenerator(name = "user_seq", sequenceName = "user_sequence", allocationSize = 1)
     private Long id;
 
-    @Column(unique = true, nullable = false)
+    @Column(nullable = false, unique = true)
     private String username;
+
+    @Column(nullable = false, unique = true)
+    private String email;
 
     @Column(nullable = false)
     private String password;
-
-    @Column(unique = true, nullable = false)
-    private String email;
 
     // Getters and Setters
     public Long getId() {

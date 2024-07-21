@@ -3,7 +3,7 @@ package com.bobo.knowhub.controller;
 import com.bobo.knowhub.model.Users;
 import com.bobo.knowhub.repository.UserRepository;
 import com.bobo.knowhub.security.JwtUtil;
-import com.bobo.knowhub.service.UserDetailsService;
+import com.bobo.knowhub.service.UserDetailsServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -35,7 +35,7 @@ public class AuthControllerTest {
     private AuthenticationManager authenticationManager;
 
     @MockBean
-    private UserDetailsService userDetailsService;
+    private UserDetailsServiceImpl userDetailsService;
 
     @MockBean
     private UserRepository userRepository;
@@ -73,8 +73,7 @@ public class AuthControllerTest {
         user.setUsername("testUser");
         user.setPassword("password");
 
-        when(authenticationManager.authenticate(any(UsernamePasswordAuthenticationToken.class)))
-                .thenReturn(mock(Authentication.class));
+        when(authenticationManager.authenticate(any())).thenReturn(mock(Authentication.class));
         when(userDetailsService.loadUserByUsername("testUser")).thenReturn(mock(UserDetails.class));
         when(jwtUtil.generateToken("testUser")).thenReturn("token");
 

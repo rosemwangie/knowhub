@@ -36,7 +36,9 @@ public class JwtUtil {
     }
 
     public String generateToken(String username) {
-        return createToken(username);
+        String token = createToken(username);
+        System.out.println("Generated Token: " + token); // Add this line to log the generated token
+        return token;
     }
 
     private String createToken(String subject) {
