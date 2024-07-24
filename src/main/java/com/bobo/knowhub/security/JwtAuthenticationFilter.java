@@ -29,6 +29,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
             throws ServletException, IOException {
         String jwt = jwtUtil.extractJwtFromRequest(request);
+        System.out.println("Extracted JWT: " + jwt); // Log extracted token
+
         if (jwt != null && jwtUtil.validateToken(jwt)) {
             String username = jwtUtil.extractUsername(jwt);
             UserDetails userDetails = userDetailsService.loadUserByUsername(username);
@@ -42,7 +44,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 System.out.println("User details not found for username: " + username); // Log user details not found
             }
         } else {
-            System.out.println("Invalid JWT token"); // Log invalid tokens
+            System.out.println("Invalid JWT token or no token provided"); // Log invalid or missing token
         }
         chain.doFilter(request, response);
     }

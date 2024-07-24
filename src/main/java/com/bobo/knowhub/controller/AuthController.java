@@ -37,7 +37,8 @@ public class AuthController {
             return "Email already in use";
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userRepository.save(user);
+//        user.setReputation(0); // initialize reputation
+        userRepository.save  (user);
         return "User registered successfully";
     }
 

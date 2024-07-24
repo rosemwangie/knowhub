@@ -23,15 +23,25 @@ public class ContentController {
 
     @PostMapping("/create")
     public Content createContent(@RequestBody Content content) {
+        // Get the authenticated user's username from the security context
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
+
+        // Load the user's details using the custom UserDetailsService
         CustomUserDetails userDetails = (CustomUserDetails) userDetailsService.loadUserByUsername(username);
+
+        // Get the actual User object from the custom UserDetails implementation
         Users user = userDetails.getUser();
+
+        // Set the user for the content
         content.setUser(user);
+
+        // Save the content
         return contentService.saveContent(content);
     }
 
     @GetMapping("/all")
     public List<Content> getAllContent() {
+        // Return all content
         return contentService.getAllContent();
     }
 }
