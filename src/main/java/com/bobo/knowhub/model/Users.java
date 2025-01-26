@@ -1,8 +1,14 @@
 package com.bobo.knowhub.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
+@AllArgsConstructor
 @Entity
+@Setter
+@Getter
 @Table(name = "users")
 public class Users {
     @Id
@@ -12,6 +18,11 @@ public class Users {
 
     @Column(nullable = false, unique = true)
     private String username;
+    private Long userId;
+    private String passwordHash;
+    private String role;
+    private int tokenBalance;
+    private String createdAt;
 
     @Column(nullable = false, unique = true)
     private String email;
@@ -19,36 +30,17 @@ public class Users {
     @Column(nullable = false)
     private String password;
 
-    // Getters and Setters
-    public Long getId() {
-        return id;
+    public Users() {
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
 
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
+    @Override
+    public String toString() {
+        return "Users{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                '}';
     }
 }

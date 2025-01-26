@@ -1,6 +1,5 @@
 package com.bobo.knowhub.service;
 
-import com.bobo.knowhub.model.CustomUserDetails;
 import com.bobo.knowhub.model.Users;
 import com.bobo.knowhub.repository.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;

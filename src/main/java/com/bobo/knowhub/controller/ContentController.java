@@ -1,7 +1,6 @@
 package com.bobo.knowhub.controller;
 
 import com.bobo.knowhub.model.Content;
-import com.bobo.knowhub.model.CustomUserDetails;
 import com.bobo.knowhub.model.Users;
 import com.bobo.knowhub.service.ContentServiceImpl;
 import com.bobo.knowhub.service.UserDetailsServiceImpl;
@@ -16,32 +15,20 @@ import java.util.List;
 public class ContentController {
 
     @Autowired
-    private ContentServiceImpl contentService;
+    private ContentService contentService;
 
-    @Autowired
-    private UserDetailsServiceImpl userDetailsService;
-
-    @PostMapping("/create")
-    public Content createContent(@RequestBody Content content) {
-        // Get the authenticated user's username from the security context
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-
-        // Load the user's details using the custom UserDetailsService
-        CustomUserDetails userDetails = (CustomUserDetails) userDetailsService.loadUserByUsername(username);
-
-        // Get the actual User object from the custom UserDetails implementation
-        Users user = userDetails.getUser();
-
-        // Set the user for the content
-        content.setUser(user);
-
-        // Save the content
-        return contentService.saveContent(content);
+    @PostMapping("/upload")
+    public Content uploadContent(@RequestBody Content content) {
+        return contentService.uploadContent(content);
     }
 
-    @GetMapping("/all")
-    public List<Content> getAllContent() {
-        // Return all content
-        return contentService.getAllContent();
+    @GetMapping("/{contentId}")
+    public Content getContent(@PathVariable Long contentId) {
+        return contentService.getContent(contentId);
+    }
+
+    @GetMapping("/")
+    public List<Content> listContent() {
+        return contentService.listContent();
     }
 }

@@ -1,8 +1,12 @@
 package com.bobo.knowhub.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.ToString;
 
+@AllArgsConstructor
 @Entity
+@ToString
 @Table(name = "content")
 public class Content {
     @Id
@@ -13,6 +17,13 @@ public class Content {
     @Column(nullable = false)
     private String title;
 
+    private Long contentId;
+    private String description;
+    private String fileHash;
+    private Long creatorId;
+    private String createdAt;
+    private boolean verified;
+
     @Column(nullable = false, length = 10000)
     private String body;
 
@@ -20,36 +31,7 @@ public class Content {
     @JoinColumn(name = "user_id")
     private Users user;
 
-    // Getters and Setters
-    public Long getId() {
-        return id;
+    public Content() {
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getBody() {
-        return body;
-    }
-
-    public void setBody(String body) {
-        this.body = body;
-    }
-
-    public Users getUser() {
-        return user;
-    }
-
-    public void setUser(Users user) {
-        this.user = user;
-    }
 }
