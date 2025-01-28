@@ -95,16 +95,19 @@
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
-			<groupId>io.jsonwebtoken</groupId>
-			<artifactId>jjwt-jackson</artifactId>
-			<version>0.11.2</version>
-			<scope>runtime</scope>
+			<groupId>com.squareup.okhttp3</groupId>
+			<artifactId>okhttp</artifactId>
+			<version>4.11.0</version>
 		</dependency>
-
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.web3j</groupId>
+			<artifactId>core</artifactId>
+			<version>4.9.4</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.security</groupId>
@@ -127,6 +130,30 @@
 					</excludes>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>org.web3j</groupId>
+				<artifactId>web3j-maven-plugin</artifactId>
+				<version>4.8.7</version>
+				<executions>
+					<execution>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>generate-sources</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<soliditySourceFiles>
+						<includes>
+							<include>src/main/resources/contracts/**/*.sol</include>
+						</includes>
+					</soliditySourceFiles>
+					<generatedSourcesDir>target/generated-sources/web3j</generatedSourcesDir>
+					<packageName>com.bobo.knowhub.contracts</packageName>
+				</configuration>
+			</plugin>
+
+
 		</plugins>
 	</build>
 

@@ -1,0 +1,5 @@
+const isVerified = await contract.verifiedContent(12345);
+// Check results or other contract states:
+await contract.requestVerification(12345);
+// Call a function, for example:
+const contract = await ethers.getContractAt("MySmartContract", "0x5FbDB2315678afecb367f032d93F642f64180aa3");

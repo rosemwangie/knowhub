@@ -4,11 +4,13 @@ import com.bobo.knowhub.model.Users;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
+@Component
 public class JwtTokenUtil {
-    private String secretKey = "your-secret-key"; // Use a secure key in production!
+    private String secretKey;
 
     public String generateToken(Users user) {
         return Jwts.builder()
@@ -28,6 +30,11 @@ public class JwtTokenUtil {
 
     public boolean validateToken(String token, Users user) {
         Claims claims = parseToken(token);
-        return claims.getSubject().equals(user.getEmail());
+        return claims.getSubject().equals(user.getEmail()) && !isTokenExpired(claims);
+    }
+
+    private boolean isTokenExpired(Claims claims) {
+        return claims.getExpiration().before(new Date());
     }
 }
+
