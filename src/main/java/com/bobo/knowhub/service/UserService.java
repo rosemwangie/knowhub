@@ -1,12 +1,14 @@
 package com.bobo.knowhub.service;
 
-import com.bobo.knowhub.model.Users;
+import com.bobo.knowhub.database.model.Users;
+import com.bobo.knowhub.dto.LoginRequest;
+import com.bobo.knowhub.dto.RegisterRequest;
 import com.bobo.knowhub.database.repository.UserRepository;
-import com.bobo.knowhub.security.JwtTokenUtil;
-import com.bobo.knowhub.exception.UserNotFoundException;
-import com.bobo.knowhub.exception.InvalidCredentialsException;
+import com.bobo.knowhub.config.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -16,75 +18,50 @@ public class UserService {
     private UserRepository userRepository;
 
     @Autowired
-    private JwtTokenUtil jwtTokenUtil;
+    private PasswordEncoder passwordEncoder;
 
-    private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    @Autowired
+    private JwtUtil jwtUtil;
 
-    /**
-     * Registers a new user.
-     *
-     * @param user The user object to be registered.
-     * @return The registered user object.
-     */
-    public Users registerUser(Users user) {
-        System.out.println("Received registration request for user: " + user.getEmail());
-        // Hash the password before saving
-        user.setPasswordHash(hashPassword(user.getPassword()));
-        return userRepository.save(user);
-    }
+    @Autowired
+    private AuthenticationManager authenticationManager;
 
-    /**
-     * Authenticates a user and returns a JWT token.
-     *
-     * @param user The user object containing login credentials.
-     * @return A JWT token if credentials are valid.
-     */
-    public String loginUser(Users user) {
-        // Find user by email
-        Users existingUser = userRepository.findByEmail(user.getEmail());
-        if (existingUser == null) {
-            throw new UserNotFoundException("User not found with email: " + user.getEmail());
+    public String registerUser(RegisterRequest request) {
+        if (userRepository.findByUsername(request.getUsername()).isPresent()) {
+            throw new RuntimeException("Username already exists");
+        }
+        if (userRepository.findByEmail(request.getEmail()).isPresent()) {
+            throw new RuntimeException("Email already exists");
         }
 
-        // Verify password using BCrypt
-        if (verifyPassword(user.getPassword(), existingUser.getPasswordHash())) {
-            // Generate and return JWT token
-            return jwtTokenUtil.generateToken(existingUser);
-        } else {
-            throw new InvalidCredentialsException("Invalid credentials for email: " + user.getEmail());
-        }
+        Users user = new Users();
+        user.setUsername(request.getUsername());
+        user.setEmail(request.getEmail());
+        user.setPassword(passwordEncoder.encode(request.getPassword()));
+        user.setRole("USER");
+        user.setTokenBalance(0);
+        user.setCreatedAt(java.time.LocalDateTime.now().toString());
+
+        userRepository.save(user);
+
+        // Generate and return token
+        return jwtUtil.generateToken(user.getUsername());
     }
 
+    public String loginUser(LoginRequest request) {
+        authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword())
+        );
 
-    /**
-     * Retrieves a user by their ID.
-     *
-     * @param userId The ID of the user to retrieve.
-     * @return The user object.
-     */
-    public Users getUser(Long userId) {
-        return userRepository.findById(userId)
-                .orElseThrow(() -> new UserNotFoundException("User not found with ID: " + userId));
+        Users user = userRepository.findByUsername(request.getUsername())
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        // Generate and return token
+        return jwtUtil.generateToken(user.getUsername());
     }
 
-    /**
-     * Hashes a plaintext password using BCrypt.
-     *
-     * @param password The plaintext password.
-     * @return The hashed password.
-     */
-    private String hashPassword(String password) {
-        return passwordEncoder.encode(password);
-    }
-
-    /**
-     * Verifies a plaintext password against a hashed password.
-     *
-     * @param rawPassword     The plaintext password.
-     * @param hashedPassword  The hashed password.
-     * @return True if the passwords match, false otherwise.
-     */
-    private boolean verifyPassword(String rawPassword, String hashedPassword) {
-        return passwordEncoder.matches(rawPassword, hashedPassword);
+    public Users getUserByUsername(String username) {
+        return userRepository.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("User not found"));
     }
 }
