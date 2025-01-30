@@ -35,7 +35,7 @@ import org.web3j.tx.gas.ContractGasProvider;
  * <p>Generated with web3j version 1.6.2.
  */
 @SuppressWarnings("rawtypes")
-public class MySmartContract extends Contract {
+public class SmartContract extends Contract {
     public static final String BINARY = "608060405234801561001057600080fd5b50600436106100625760003560e01c8063015d15f8146100675780630c020f081461008357806349afc6e51461009f5780639105d748146100cf578063911cdec8146100ff578063ab2c4d011461011b575b...\n";
 
     private static String librariesLinkedBinary;
@@ -61,24 +61,24 @@ public class MySmartContract extends Contract {
     ;
 
     @Deprecated
-    protected MySmartContract(String contractAddress, Web3j web3j, Credentials credentials,
-            BigInteger gasPrice, BigInteger gasLimit) {
+    protected SmartContract(String contractAddress, Web3j web3j, Credentials credentials,
+                            BigInteger gasPrice, BigInteger gasLimit) {
         super(BINARY, contractAddress, web3j, credentials, gasPrice, gasLimit);
     }
 
-    protected MySmartContract(String contractAddress, Web3j web3j, Credentials credentials,
-            ContractGasProvider contractGasProvider) {
+    protected SmartContract(String contractAddress, Web3j web3j, Credentials credentials,
+                            ContractGasProvider contractGasProvider) {
         super(BINARY, contractAddress, web3j, credentials, contractGasProvider);
     }
 
     @Deprecated
-    protected MySmartContract(String contractAddress, Web3j web3j,
-            TransactionManager transactionManager, BigInteger gasPrice, BigInteger gasLimit) {
+    protected SmartContract(String contractAddress, Web3j web3j,
+                            TransactionManager transactionManager, BigInteger gasPrice, BigInteger gasLimit) {
         super(BINARY, contractAddress, web3j, transactionManager, gasPrice, gasLimit);
     }
 
-    protected MySmartContract(String contractAddress, Web3j web3j,
-            TransactionManager transactionManager, ContractGasProvider contractGasProvider) {
+    protected SmartContract(String contractAddress, Web3j web3j,
+                            TransactionManager transactionManager, ContractGasProvider contractGasProvider) {
         super(BINARY, contractAddress, web3j, transactionManager, contractGasProvider);
     }
 
@@ -224,47 +224,47 @@ public class MySmartContract extends Contract {
     }
 
     @Deprecated
-    public static MySmartContract load(String contractAddress, Web3j web3j, Credentials credentials,
-            BigInteger gasPrice, BigInteger gasLimit) {
-        return new MySmartContract(contractAddress, web3j, credentials, gasPrice, gasLimit);
+    public static SmartContract load(String contractAddress, Web3j web3j, Credentials credentials,
+                                     BigInteger gasPrice, BigInteger gasLimit) {
+        return new SmartContract(contractAddress, web3j, credentials, gasPrice, gasLimit);
     }
 
     @Deprecated
-    public static MySmartContract load(String contractAddress, Web3j web3j,
-            TransactionManager transactionManager, BigInteger gasPrice, BigInteger gasLimit) {
-        return new MySmartContract(contractAddress, web3j, transactionManager, gasPrice, gasLimit);
+    public static SmartContract load(String contractAddress, Web3j web3j,
+                                     TransactionManager transactionManager, BigInteger gasPrice, BigInteger gasLimit) {
+        return new SmartContract(contractAddress, web3j, transactionManager, gasPrice, gasLimit);
     }
 
-    public static MySmartContract load(String contractAddress, Web3j web3j, Credentials credentials,
-            ContractGasProvider contractGasProvider) {
-        return new MySmartContract(contractAddress, web3j, credentials, contractGasProvider);
+    public static SmartContract load(String contractAddress, Web3j web3j, Credentials credentials,
+                                     ContractGasProvider contractGasProvider) {
+        return new SmartContract(contractAddress, web3j, credentials, contractGasProvider);
     }
 
-    public static MySmartContract load(String contractAddress, Web3j web3j,
-            TransactionManager transactionManager, ContractGasProvider contractGasProvider) {
-        return new MySmartContract(contractAddress, web3j, transactionManager, contractGasProvider);
+    public static SmartContract load(String contractAddress, Web3j web3j,
+                                     TransactionManager transactionManager, ContractGasProvider contractGasProvider) {
+        return new SmartContract(contractAddress, web3j, transactionManager, contractGasProvider);
     }
 
-    public static RemoteCall<MySmartContract> deploy(Web3j web3j, Credentials credentials,
-            ContractGasProvider contractGasProvider) {
-        return deployRemoteCall(MySmartContract.class, web3j, credentials, contractGasProvider, getDeploymentBinary(), "");
-    }
-
-    @Deprecated
-    public static RemoteCall<MySmartContract> deploy(Web3j web3j, Credentials credentials,
-            BigInteger gasPrice, BigInteger gasLimit) {
-        return deployRemoteCall(MySmartContract.class, web3j, credentials, gasPrice, gasLimit, getDeploymentBinary(), "");
-    }
-
-    public static RemoteCall<MySmartContract> deploy(Web3j web3j,
-            TransactionManager transactionManager, ContractGasProvider contractGasProvider) {
-        return deployRemoteCall(MySmartContract.class, web3j, transactionManager, contractGasProvider, getDeploymentBinary(), "");
+    public static RemoteCall<SmartContract> deploy(Web3j web3j, Credentials credentials,
+                                                   ContractGasProvider contractGasProvider) {
+        return deployRemoteCall(SmartContract.class, web3j, credentials, contractGasProvider, getDeploymentBinary(), "");
     }
 
     @Deprecated
-    public static RemoteCall<MySmartContract> deploy(Web3j web3j,
-            TransactionManager transactionManager, BigInteger gasPrice, BigInteger gasLimit) {
-        return deployRemoteCall(MySmartContract.class, web3j, transactionManager, gasPrice, gasLimit, getDeploymentBinary(), "");
+    public static RemoteCall<SmartContract> deploy(Web3j web3j, Credentials credentials,
+                                                   BigInteger gasPrice, BigInteger gasLimit) {
+        return deployRemoteCall(SmartContract.class, web3j, credentials, gasPrice, gasLimit, getDeploymentBinary(), "");
+    }
+
+    public static RemoteCall<SmartContract> deploy(Web3j web3j,
+                                                   TransactionManager transactionManager, ContractGasProvider contractGasProvider) {
+        return deployRemoteCall(SmartContract.class, web3j, transactionManager, contractGasProvider, getDeploymentBinary(), "");
+    }
+
+    @Deprecated
+    public static RemoteCall<SmartContract> deploy(Web3j web3j,
+                                                   TransactionManager transactionManager, BigInteger gasPrice, BigInteger gasLimit) {
+        return deployRemoteCall(SmartContract.class, web3j, transactionManager, gasPrice, gasLimit, getDeploymentBinary(), "");
     }
 
 //    public static void linkLibraries(List<Contract.LinkReference> references) {

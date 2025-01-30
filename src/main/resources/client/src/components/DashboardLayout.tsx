@@ -40,7 +40,7 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
         )}
       >
         <div className="flex items-center justify-between p-4">
-          {!collapsed && <span className="text-xl font-bold">Moon Base</span>}
+          {!collapsed && <span className="text-xl font-bold">Know Hub</span>}
           <button
             onClick={() => setCollapsed(!collapsed)}
             className="p-2 hover:bg-primary-hover rounded-lg"

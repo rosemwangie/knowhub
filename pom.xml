@@ -11,6 +11,15 @@
 	<groupId>com.bobo</groupId>
 	<artifactId>knowhub</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+
+	<repositories>
+		<repository>
+			<id>jitpack.io</id>
+			<url>https://jitpack.io</url>
+		</repository>
+	</repositories>
+
+
 	<name>knowhub</name>
 	<description>knowhub</description>
 	<url/>
@@ -146,6 +155,16 @@
 			<version>4.9.4</version>
 		</dependency>
 		<dependency>
+			<groupId>com.github.ipfs</groupId>
+			<artifactId>java-ipfs-http-client</artifactId>
+			<version>v1.3.3</version>
+		</dependency>
+		<dependency>
+			<groupId>com.github.multiformats</groupId>
+			<artifactId>java-multiaddr</artifactId>
+			<version>v1.4.1</version>
+		</dependency>
+		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
@@ -189,8 +208,8 @@
 				</configuration>
 			</plugin>
 
-
 		</plugins>
+
 	</build>
 
 </project>

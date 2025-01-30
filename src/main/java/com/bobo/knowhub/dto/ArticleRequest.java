@@ -6,4 +6,5 @@ import lombok.Data;
 public class ArticleRequest {
     private String title;
     private String content;
+//    private String ipfsHash;  // Add IPFS hash here
 }

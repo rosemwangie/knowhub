@@ -1,6 +1,5 @@
 package com.bobo.knowhub.config;
 
-import com.bobo.knowhub.database.model.Users;
 import com.bobo.knowhub.database.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -20,13 +19,12 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Users user = userRepository.findByUsername(username)
+        return userRepository.findByUsername(username)
+                .map(user -> new User(
+                        user.getUsername(),
+                        user.getPassword(),
+                        Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + user.getRole()))
+                ))
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + username));
-
-        return new User(
-                user.getUsername(),
-                user.getPassword(),
-                Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + user.getRole()))
-        );
     }
 }

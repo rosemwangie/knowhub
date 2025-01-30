@@ -5,6 +5,7 @@ import com.bobo.knowhub.dto.LoginRequest;
 import com.bobo.knowhub.dto.RegisterRequest;
 import com.bobo.knowhub.database.repository.UserRepository;
 import com.bobo.knowhub.config.JwtUtil;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -63,5 +64,10 @@ public class UserService {
     public Users getUserByUsername(String username) {
         return userRepository.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("User not found"));
+    }
+
+    @Transactional
+    public Users updateUser(Users user) {
+        return userRepository.save(user);
     }
 }
