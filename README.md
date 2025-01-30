@@ -28,7 +28,7 @@ The Decentralized Knowledge Sharing Platform is a facility for secure, transpare
 ### Tech Tools
 
 - **Backend** 
-  - ****
+  - **Java, Spring Boot**
 - **Database**: 
   - PostgreSQL
 - **Frontend**: 
@@ -71,6 +71,22 @@ The Decentralized Knowledge Sharing Platform is a facility for secure, transpare
 ```agsl
 mvn spring-boot::run
 ```
+
+```agsl
+npm run dev
+```
+
+```agsl
+npx hardhat node
+```
+
+```agsl
+ipfs daemon
+```
+```agsl
+npx hardhat run script/deploy.js --network localhost
+```
+
 
 **Frontend**
 
